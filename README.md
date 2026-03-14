@@ -1,24 +1,71 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+Namma Social Website
 
-This contains everything you need to run your app locally.
+Frontend web application for Namma Social, a modern platform focused on building community-driven digital spaces.
 
+This repository contains the React + Vite + TypeScript implementation of the Namma Social web interface.
 
-## Run Locally
+The goal of this project is to create a fast, scalable, and modern web experience for users interacting with the Namma Social ecosystem.
 
-**Prerequisites:** Node.js
+Vision
 
-1. Install dependencies:
-   `npm install`
-2. Copy `.env.example` to `.env` and fill in the values (at minimum `APP_URL`).
-3. Run the app:
-   `npm run dev`
+Namma Social aims to build a digital social layer where communities can interact, share ideas, and build meaningful connections.
 
-## Environment variables
+The web client focuses on:
 
-This project uses `.env` to configure runtime settings.
+Speed and performance
 
-- `APP_URL`: the URL where the app is hosted.
+Clean and responsive UI
 
-If you add any API integrations later, you can add corresponding keys to `.env` as needed.
+Scalable frontend architecture
+
+Modern developer experience
+
+Features
+
+Current and planned features include:
+
+Modern responsive UI
+
+Modular React component architecture
+
+High performance Vite build system
+
+Custom animated UI components
+
+Scalable frontend structure for future features
+
+Future roadmap includes:
+
+Authentication system
+
+User profiles
+
+Social feeds
+
+Content interaction system
+
+API integration
+
+Real-time features
+
+Tech Stack
+
+Frontend Framework
+React
+
+Build Tool
+Vite
+
+Language
+TypeScript
+
+Styling
+CSS
+
+Package Manager
+npm
+
+Version Control
+Git
+
+Repository Hosting

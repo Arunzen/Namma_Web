@@ -58,9 +58,12 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex flex-1 justify-end items-center gap-6">
-          <button className="bg-brand-primary text-white px-10 py-3 rounded-full text-xl font-black hover:bg-brand-accent transition-all duration-300 shadow-xl shadow-brand-primary/30 hover:scale-105 active:scale-95">
+          <a
+            href="#contact"
+            className="bg-brand-primary text-white px-10 py-3 rounded-full text-xl font-black hover:bg-brand-accent transition-all duration-300 shadow-xl shadow-brand-primary/30 hover:scale-105 active:scale-95"
+          >
             Get Started
-          </button>
+          </a>
         </div>
 
         {/* Mobile Toggle */}
@@ -93,9 +96,13 @@ const Navbar = () => {
                 {item}
               </a>
             ))}
-            <button className="bg-brand-primary text-white px-6 py-4 rounded-xl font-black text-xl">
+            <a
+              href="#contact"
+              className="bg-brand-primary text-white px-6 py-4 rounded-xl font-black text-xl text-center"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
               Get Started
-            </button>
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -376,10 +383,9 @@ const AboutSection = () => {
           </motion.div>
           <div className="grid grid-cols-2 gap-10 relative">
             {[
-              { name: 'Sivakami Uma Muthukumar', role: 'Founder', img: 'https://media.licdn.com/dms/image/v2/D5610AQHZV-KSmQnrjg/image-shrink_1280/B56ZxnDKpIJ4Ac-/0/1771255410351?e=1774130400&v=beta&t=ZUIaRzqRnyb79gAfEXFr369sXXR2HVKE9CvTIcXBYfc' },
+              { name: 'Shivkamni Devi', role: 'Founder', img: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=2000&auto=format&fit=crop' },
               { name: 'Muthu Kumar Mariappan', role: 'Marketing Strategist', img: 'https://media.licdn.com/dms/image/v2/C5603AQH_QfJbTLDq_g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1628463163476?e=1775088000&v=beta&t=2I9BB-NLTUGduLNldtoumbZelUkPxu9x6EfAaclUGY4' },
-              { name: 'Anand', role: 'Developer', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=500' },
-              { name: 'Arun', role: 'Co-Developer', img: 'https://media.licdn.com/dms/image/v2/D5603AQFHtrDW4cPy3g/profile-displayphoto-crop_800_800/B56ZhP6YcUHMAM-/0/1753687366428?e=1775088000&v=beta&t=PI8Q-agegj5QxJJNwzmw-kdj1IoZMQ-UorDd8lCaDtE' }
+              { name: 'Arun Gupta', role: 'Developer', img: 'https://media.licdn.com/dms/image/v2/D5603AQFHtrDW4cPy3g/profile-displayphoto-crop_800_800/B56ZhP6YcUHMAM-/0/1753687366428?e=1775088000&v=beta&t=PI8Q-agegj5QxJJNwzmw-kdj1IoZMQ-UorDd8lCaDtE' }
             ].map((member, i) => (
               <motion.div
                 key={i}
@@ -479,8 +485,31 @@ const Blog = () => {
 };
 
 const CTA = () => {
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const formRef = React.useRef<HTMLFormElement>(null);
+
+  const handleSubmit = () => {
+    setFormStatus('sending');
+  };
+
+  const handleIframeLoad = () => {
+    if (formStatus === 'sending') {
+      setFormStatus('success');
+      formRef.current?.reset();
+      setTimeout(() => setFormStatus('idle'), 5000);
+    }
+  };
+
   return (
     <section id="contact" className="py-24 px-6 text-center relative overflow-hidden scroll-mt-28">
+      {/* Hidden iframe for form submission */}
+      <iframe
+        name="hidden_iframe"
+        id="hidden_iframe"
+        style={{ display: 'none' }}
+        onLoad={handleIframeLoad}
+      />
+
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative z-10">
@@ -495,15 +524,105 @@ const CTA = () => {
           <p className="text-2xl md:text-3xl text-[var(--text)] opacity-60 mb-16 max-w-3xl mx-auto font-light leading-relaxed">
             Join the elite circle of founders and influencers who are scaling their impact with Namma Socials.
           </p>
-          <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 0 100px rgba(128,0,128,0.5)" }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative bg-[var(--text)] text-brand-dark px-14 py-7 rounded-full font-display text-2xl md:text-4xl hover:bg-brand-primary hover:text-white transition-all duration-500 shadow-[0_0_80px_rgba(128,0,128,0.3)] uppercase tracking-wider"
+
+          <form
+            ref={formRef}
+            action="https://docs.google.com/forms/d/e/1FAIpQLSckTXjwCRCivl-nY__XlRJfYMIJgmYWdrOWOsINhX0fHKP_DA/formResponse"
+            method="POST"
+            target="hidden_iframe"
+            onSubmit={handleSubmit}
+            className="max-w-2xl mx-auto mt-24 text-left space-y-10 glass p-12 rounded-[3rem] border-black/5 relative"
           >
-            <span className="flex items-center gap-4">
-              Book Your Strategy Call <ChevronRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
-            </span>
-          </motion.button>
+            <div className="mb-8">
+              <h3 className="font-display text-4xl mb-2 text-[var(--text)] opacity-80 uppercase tracking-wide">Get in touch</h3>
+              <p className="text-lg font-light opacity-50">Fill in your details and we will get back to you within 24 hours.</p>
+            </div>
+
+            <div className="space-y-4">
+              <label className="text-sm font-medium opacity-40 uppercase tracking-widest ml-4">Full name</label>
+              <input
+                type="text"
+                name="entry.747901820"
+                required
+                placeholder="Arun Kumar"
+                className="w-full bg-[#2d2d2d] text-white border border-black/10 rounded-2xl px-6 py-5 outline-none focus:border-brand-primary/50 transition-all font-light text-lg placeholder:opacity-30"
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label className="text-sm font-medium opacity-40 uppercase tracking-widest ml-4">Contact number</label>
+              <input
+                type="tel"
+                name="entry.641282988"
+                required
+                placeholder="+91 98765 43210"
+                className="w-full bg-[#2d2d2d] text-white border border-black/10 rounded-2xl px-6 py-5 outline-none focus:border-brand-primary/50 transition-all font-light text-lg placeholder:opacity-30"
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label className="text-sm font-medium opacity-40 uppercase tracking-widest ml-4">Email address</label>
+              <input
+                type="email"
+                name="entry.169231119"
+                required
+                placeholder="you@company.com"
+                className="w-full bg-[#2d2d2d] text-white border border-black/10 rounded-2xl px-6 py-5 outline-none focus:border-brand-primary/50 transition-all font-light text-lg placeholder:opacity-30"
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label className="text-sm font-medium opacity-40 uppercase tracking-widest ml-4">Company or brand name</label>
+              <input
+                type="text"
+                name="entry.713119553"
+                required
+                placeholder="Namma Socials"
+                className="w-full bg-[#2d2d2d] text-white border border-black/10 rounded-2xl px-6 py-5 outline-none focus:border-brand-primary/50 transition-all font-light text-lg placeholder:opacity-30"
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label className="text-sm font-medium opacity-40 uppercase tracking-widest ml-4">How can we help you?</label>
+              <textarea
+                name="entry.570049765"
+                required
+                rows={4}
+                placeholder="Tell us a little about what you are looking for..."
+                className="w-full bg-[#2d2d2d] text-white border border-black/10 rounded-2xl px-6 py-5 outline-none focus:border-brand-primary/50 transition-all font-light text-lg resize-none placeholder:opacity-30"
+              />
+            </div>
+
+            <motion.button
+              type="submit"
+              disabled={formStatus === 'sending'}
+              whileHover={{ scale: 1.02, boxShadow: "0 0 60px rgba(128,0,128,0.25)" }}
+              whileTap={{ scale: 0.98 }}
+              className={cn(
+                "w-full py-6 rounded-2xl font-display text-2xl uppercase tracking-wider transition-all duration-300 shadow-xl",
+                formStatus === 'success' ? "bg-green-600 text-white" : "bg-brand-primary text-white shadow-brand-primary/20",
+                formStatus === 'sending' && "opacity-70 cursor-not-allowed"
+              )}
+            >
+              {formStatus === 'idle' && "Book Your Strategy Call"}
+              {formStatus === 'sending' && "Sending..."}
+              {formStatus === 'success' && "Thank You! We'll talk soon."}
+              {formStatus === 'error' && "Error! Please try again."}
+            </motion.button>
+
+            <AnimatePresence>
+              {formStatus === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute -bottom-16 left-0 right-0 text-center text-green-600 font-medium"
+                >
+                  Your message has been received!
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </form>
         </motion.div>
       </div>
     </section>

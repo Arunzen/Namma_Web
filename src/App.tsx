@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Linkedin,
@@ -16,7 +16,6 @@ import {
   Rocket,
   PenTool
 } from 'lucide-react';
-import { LiquidEther } from './components/LiquidEther';
 import { Logo, LogoWithText } from './components/Logo';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -105,20 +104,9 @@ const Navbar = () => {
 };
 
 const Hero = () => {
-  const heroLiquidColors = useMemo(() => ['#FF00FF', '#800080', '#000000'], []);
-
   return (
     <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden pt-40 pb-24">
-      {/* Liquid Background */}
-      <div className="absolute inset-0 z-0">
-        <LiquidEther
-          colors={heroLiquidColors}
-          mouseForce={80}
-          autoDemo={true}
-          autoSpeed={1.2}
-          resolution={1}
-        />
-      </div>
+
 
       <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-transparent via-transparent to-brand-dark" />
 
@@ -311,14 +299,15 @@ const Tools = () => {
               </button>
             </div>
             <div className="flex-1 w-full aspect-video bg-black/5 rounded-2xl border border-black/10 flex items-center justify-center relative overflow-hidden">
-              <div className="grid grid-cols-3 gap-4 p-8 w-full h-full opacity-40">
-                {[1, 2, 3, 4, 5, 6].map(i => (
-                  <div key={i} className="bg-white rounded-lg p-4 shadow-sm border border-black/5 h-24" />
-                ))}
-              </div>
+              <img
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
+                alt="Scheduler Mockup"
+                className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-white p-6 rounded-2xl shadow-2xl border border-black/5 transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
-                  <p className="font-display text-xl uppercase text-brand-primary">Drag to Schedule</p>
+                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-2xl transform rotate-2 group-hover:rotate-0 transition-all duration-500">
+                  <p className="font-display text-xl uppercase text-white">Drag to Schedule</p>
                 </div>
               </div>
             </div>
@@ -445,9 +434,24 @@ const Blog = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {[
-            { title: "The Gen Z Attention Span: How to Win in 3 Seconds", category: "Social Tips", date: "MAR 10, 2026" },
-            { title: "Case Study: Scaling a SaaS Founder to 100k on LinkedIn", category: "Case Studies", date: "FEB 25, 2026" },
-            { title: "Why Silence is the Most Expensive Strategy in 2026", category: "Strategy", date: "FEB 12, 2026" }
+            {
+              title: "The Gen Z Attention Span: How to Win in 3 Seconds",
+              category: "Social Tips",
+              date: "MAR 10, 2026",
+              img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop"
+            },
+            {
+              title: "Case Study: Scaling a SaaS Founder to 100k on LinkedIn",
+              category: "Case Studies",
+              date: "FEB 25, 2026",
+              img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"
+            },
+            {
+              title: "Why Silence is the Most Expensive Strategy in 2026",
+              category: "Strategy",
+              date: "FEB 12, 2026",
+              img: "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=2067&auto=format&fit=crop"
+            }
           ].map((post, i) => (
             <motion.div
               key={i}
@@ -457,7 +461,11 @@ const Blog = () => {
               className="group cursor-pointer"
             >
               <div className="aspect-video bg-black/5 rounded-[2rem] mb-8 overflow-hidden border border-black/5 group-hover:border-brand-primary/30 transition-all">
-                <div className="w-full h-full bg-gradient-to-br from-brand-primary/10 to-brand-accent/10 group-hover:scale-105 transition-transform duration-700" />
+                <img
+                  src={post.img}
+                  alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
               </div>
               <p className="text-xs uppercase tracking-widest text-brand-accent mb-4 font-medium">{post.category}</p>
               <h3 className="font-display text-3xl mb-6 uppercase tracking-wide group-hover:text-brand-primary transition-colors leading-tight">{post.title}</h3>
